@@ -20,7 +20,7 @@ module Caracal
 
         # readers (create aliases for superclass methods to conform
         # to expected naming convention.)
-        (ParagraphModel::option_keys - %i(content )).each do |attr|
+        (ParagraphModel::option_keys - %i(content)).each do |attr|
           alias_method :"list_item_#{attr}", :"paragraph_#{attr}"
         end
 
@@ -54,6 +54,24 @@ module Caracal
 
         def valid?
           super and [:type, :level].all? {|a| validate_presence a } and not runs.empty?
+        end
+
+        def apply_styles(opts={}, reverse: false)
+          options = opts.dup
+          options.each do |k, v|
+            if self.respond_to? k
+              if not reverse or self.send("list_item_#{k}").nil?
+                send k, v
+              end
+              # options.delete k
+            end
+          end
+
+          self.runs.each do |run|
+            run.apply_styles options
+          end
+
+          super options, reverse: reverse
         end
 
         private

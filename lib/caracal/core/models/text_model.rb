@@ -53,6 +53,16 @@ module Caracal
           [:content, :style, :end_tab] + HasRunAttributes::ATTRS
         end
 
+        def apply_styles(opts={}, reverse: false)
+          options = opts.dup
+          ra = self.run_attributes
+          options.each do |k, v|
+            if self.respond_to? k and not ra[k]
+              self.send k, v
+            end
+          end
+        end
+
         private
 
         def option_keys

@@ -57,12 +57,11 @@ module Caracal
 
         # .li
         def li(*args, &block)
-          options = Caracal::Utilities.extract_options!(args)
-          options.merge!({ content: args.first }) if args.first
-          options.merge!({ type:    list_type  })
-          options.merge!({ level:   list_level })
+          options = Caracal::Utilities.extract_options! args
+          options.merge! content: args.first if args.first
+          options.merge! type: list_type, level: list_level
 
-          model = Caracal::Core::Models::ListItemModel.new(options, &block)
+          model = Caracal::Core::Models::ListItemModel.new options, &block
           if model.valid?
             items << model
           else
@@ -71,6 +70,12 @@ module Caracal
           model
         end
 
+
+        def apply_styles(opts={}, reverse: false)
+          self.items.each do |item|
+            item.apply_styles opts, reverse: reverse
+          end
+        end
 
         #=============== VALIDATION ===========================
 

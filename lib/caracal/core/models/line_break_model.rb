@@ -9,6 +9,10 @@ module Caracal
       # line break data.
       class LineBreakModel < BaseModel
 
+        def apply_styles(*args, **kwargs)
+          # noop
+        end
+
       end
 
     end

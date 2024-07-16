@@ -67,7 +67,7 @@ module Caracal
             # the final tag in a table cell *must* be a paragraph for OOXML to not throw an error.
             p_klass = Caracal::Core::Models::ParagraphModel
             unless contents.last.is_a? p_klass
-              self.contents << p_klass.new(self.paragraph_attributes.merge(content: ''))
+              self.contents << p_klass.new(self.paragraph_attributes.merge content: '')
             end
           end
         end
@@ -109,23 +109,27 @@ module Caracal
 
           # then, try apply to contents
           contents.each do |model|
-            options.each do |k, v|
+            if model.respond_to? :apply_styles
+              model.apply_styles options, reverse: reverse
+            else
               pa = model.respond_to?(:paragraph_attributes) ? model.paragraph_attributes : {}
-              if model.respond_to? k and not pa[k]
-                model.send k, v
-                # options.delete k unless HasRunAttributes::ATTRS.include? k
+              options.each do |k, v|
+                if model.respond_to? k and not pa[k]
+                  model.send k, v
+                  # options.delete k unless HasRunAttributes::ATTRS.include? k
+                end
               end
-            end
 
-            # finally, apply to runs. options do trickle down
-            # because paragraph-level styles don't affect runs within tables.
-            # only sets options on runs that don't have that option already set.
-            if model.respond_to? :runs
-              model.runs.each do |run|
-                ra = run.respond_to?(:run_attributes) ? run.run_attributes : {}
-                options.each do |k, v|
-                  if run.respond_to? k and not ra[k]
-                    run.send k, v
+              # finally, apply to runs. options do trickle down
+              # because paragraph-level styles don't affect runs within tables.
+              # only sets options on runs that don't have that option already set.
+              if model.respond_to? :runs
+                model.runs.each do |run|
+                  ra = run.respond_to?(:run_attributes) ? run.run_attributes : {}
+                  options.each do |k, v|
+                    if run.respond_to? k and not ra[k]
+                      run.send k, v
+                    end
                   end
                 end
               end

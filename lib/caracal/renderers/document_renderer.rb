@@ -298,10 +298,17 @@ module Caracal
 
         w.p paragraph_options do
           w.pPr do
+            w.pStyle 'w:val' => model.paragraph_style || 'Normal'
+            w.keepNext if model.paragraph_keep_next == true
             w.numPr do
               w.ilvl 'w:val' => model.list_item_level
               w.numId 'w:val' => list_num
             end
+            render_borders    w, model, 'pBdr', :paragraph
+            render_background w, model, :paragraph
+            render_tabs       w, model, model.paragraph_tabs if model.paragraph_tabs&.any?
+            spacing = spacing_options model
+            w.spacing spacing unless spacing.nil?
             w.ind 'w:start' => ls.style_left, 'w:hanging' => hanging
             w.contextualSpacing 'w:val' => true
             render_run_attributes w, model, skip_empty: true

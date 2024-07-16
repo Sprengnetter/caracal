@@ -41,7 +41,11 @@ module Caracal
           content = o.delete(:content) { '' }
           super o, &block
 
-          text content, self.run_attributes
+          # if there's content from the block, do not append an empty string content
+          # otherwise make sure there is at least one (potentially empty) run
+          if self.runs.none? or not content.blank?
+            text content, self.run_attributes
+          end
         end
 
 
@@ -186,6 +190,21 @@ module Caracal
 
         def empty?
           runs.size.zero? || plain_text.length.zero?
+        end
+
+        def apply_styles(opts={}, reverse: false)
+          options = opts.dup
+          pa = self.paragraph_attributes
+          options.each do |k, v|
+            if self.respond_to? k and not pa[k]
+              self.send k, v
+              # options.delete k unless HasRunAttributes::ATTRS.include? k
+            end
+          end
+
+          self.runs.each do |run|
+            run.apply_styles options
+          end
         end
 
         #========== VALIDATION ============================
