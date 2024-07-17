@@ -110,17 +110,19 @@ module Caracal
                 w.i       'w:val' => attrs.italic
                 # w.iCs     'w:val' => attrs.italic
               end
-              w.caps      'w:val' => attrs.caps                            unless attrs.caps.nil?
-              w.smallCaps 'w:val' => attrs.small_caps                      unless attrs.small_caps.nil?
-              w.strike    'w:val' => attrs.strike                          unless attrs.strike.nil?
-              render_color w, attrs
-              w.sz        'w:val' => attrs.size                            unless attrs.size.nil?
-              # w.highlight 'w:val' => attrs.highlight_color                 unless attrs.highlight_color.nil?
-              w.u         'w:val' => (attrs.underline ? 'single' : 'none') unless attrs.underline.nil?
+              w.caps       'w:val' => attrs.caps                            unless attrs.caps.nil?
+              w.smallCaps  'w:val' => attrs.small_caps                      unless attrs.small_caps.nil?
+              w.strike     'w:val' => attrs.strike                          unless attrs.strike.nil?
+              render_color  w, attrs
+              w.sz         'w:val' => attrs.size                            unless attrs.size.nil?
+              # w.highlight  'w:val' => attrs.highlight_color                 unless attrs.highlight_color.nil?
+              w.u          'w:val' => (attrs.underline ? 'single' : 'none') unless attrs.underline.nil?
               # TODO: w.bdr
               render_background w, attrs
-              w.vertAlign 'w:val' => attrs.vertical_align                  unless attrs.vertical_align.nil?
-              w.rtl       'w:val' => attrs.rtl                             unless attrs.rtl.nil?
+              w.vertAlign  'w:val' => attrs.vertical_align                  unless attrs.vertical_align.nil?
+              w.rtl        'w:val' => attrs.rtl                             unless attrs.rtl.nil?
+              w.specVanish 'w:val' => attrs.hide_mark                       unless attrs.hide_mark.nil?
+              w.vanish     'w:val' => attrs.hide_mark                       unless attrs.hide_mark.nil?
             end
           end
         end

@@ -54,8 +54,9 @@ module Caracal
             theme_bgcolor:   self.send("#{self.class.attr_prefix}_theme_bgcolor"),
             bgstyle:         self.send("#{self.class.attr_prefix}_bgstyle"),
             vertical_align:  self.send("#{self.class.attr_prefix}_vertical_align"),
-            rtl:             self.send("#{self.class.attr_prefix}_rtl")
+            rtl:             self.send("#{self.class.attr_prefix}_rtl"),
           }.compact
+          attrs[:hide_mark] = self.send("#{self.class.attr_prefix}_hide_mark") if self.respond_to? "#{self.class.attr_prefix}_hide_mark"
           OpenStruct.new attrs
         end
 

@@ -32,6 +32,7 @@ module Caracal
         has_boolean_attribute :keep_next
         has_boolean_attribute :keep_lines
         has_boolean_attribute :widow_control
+        has_boolean_attribute :hide_mark
 
         attr_reader :paragraph_tabs
 
@@ -101,7 +102,7 @@ module Caracal
         #========== SUB-METHODS ===========================
 
         def field(*args, &block)
-          options = self.run_attributes.to_h
+          options = self.run_attributes.to_h.except(:hide_mark)
           options.merge! Caracal::Utilities.extract_options!(args).dup
           options.merge! name: args.first if args.first
 
@@ -174,7 +175,7 @@ module Caracal
         # .text
         def text(*args, &block)
           options = Caracal::Utilities.extract_options! args
-          options.merge! self.run_attributes.to_h
+          options.merge! self.run_attributes.to_h.except(:hide_mark)
           options.merge! content: args.first if args.first
 
           model = Caracal::Core::Models::TextModel.new(options, &block)
@@ -214,7 +215,7 @@ module Caracal
         end
 
         def self.option_keys
-          %i[content style align tabs top bottom line keep_next keep_lines widow_control] +
+          %i[content style align tabs top bottom line keep_next keep_lines widow_control hide_mark] +
               HasMargins::ATTRS +
               HasRunAttributes::ATTRS
         end
