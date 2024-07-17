@@ -43,7 +43,7 @@ module Caracal
 
           # if there's content from the block, do not append an empty string content
           # otherwise make sure there is at least one (potentially empty) run
-          if self.runs.none? or not content.blank?
+          if self.runs.none? or not content.to_s.strip.empty?
             text content, self.run_attributes
           end
         end
