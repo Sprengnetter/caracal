@@ -1,3 +1,5 @@
+[![Test](https://github.com/Sprengnetter/caracal/actions/workflows/ci.yml/badge.svg)](https://github.com/Sprengnetter/caracal/actions/workflows/ci.yml)
+
 # Caracal
 
 This fork includes fixes and functionalities from pending PRs from the original project, to be able to use them while waiting for the PRs to be merged there.
