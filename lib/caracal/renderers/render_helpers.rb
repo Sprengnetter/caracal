@@ -121,8 +121,8 @@ module Caracal
               render_background w, attrs
               w.vertAlign  'w:val' => attrs.vertical_align                  unless attrs.vertical_align.nil?
               w.rtl        'w:val' => attrs.rtl                             unless attrs.rtl.nil?
-              w.specVanish 'w:val' => attrs.hide_mark                       unless attrs.hide_mark.nil?
               w.vanish     'w:val' => attrs.hide_mark                       unless attrs.hide_mark.nil?
+              w.specVanish 'w:val' => attrs.hide_mark                       unless attrs.hide_mark.nil?
             end
           end
         end
