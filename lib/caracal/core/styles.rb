@@ -35,6 +35,7 @@ module Caracal
               { id: 'TOC6',      name: 'TOC 6',     font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 320, italic: true, color: '666666', type: :paragraph },
               { id: 'Title',     name: 'title',     font: 'Palatino', size: 60 },
               { id: 'Subtitle',  name: 'subtitle',  font: 'Arial',    size: 28, top: 60 },
+              { id: 'Caption',   name: 'caption',   font: 'Arial',    size: 22, bottom: 120, top: 120, bold: true, type: :paragraph  },
               { id: 'Hyperlink', name: 'hyperlink', type: 'character', underline: true, color: '0000ff' }
             ]
           end

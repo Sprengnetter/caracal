@@ -401,6 +401,18 @@ module Caracal
         w = xml['w']
         tbl_look = table_look_options(model)
 
+        unless model.table_caption.nil?
+          w.p do
+            w.pPr do
+              w.pStyle 'w:val' => 'Caption'
+              w.keepNext
+            end
+            w.r do
+              w.t model.table_caption
+            end
+          end
+        end
+
         w.tbl do
           w.tblPr do
             w.tblStyle            'w:val' => model.table_style || 'TableNormal'         #unless model.table_style.nil?

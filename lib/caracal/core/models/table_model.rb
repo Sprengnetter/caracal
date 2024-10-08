@@ -20,7 +20,7 @@ module Caracal
         TABLE_LAYOUTS = %i(fixed autofit)
         TABLE_ALIGNS  = %i(left center right start end)
 
-        has_string_attribute :caption, default: 'TableNormal'
+        has_string_attribute :caption
         has_string_attribute :style, default: 'TableNormal'
 
         has_symbol_attribute :layout, default: :fixed
