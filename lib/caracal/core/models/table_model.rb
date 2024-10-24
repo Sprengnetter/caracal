@@ -148,7 +148,7 @@ module Caracal
                 when Caracal::Core::Models::TableCellModel
                   if data_cell.cell_style
                     # data_cell.apply_styles merge_named_styles(style: data_cell.cell_style)
-                    raise "hould not happen (yet)"
+                    raise "should not happen (yet)"
                     data_cell.apply_styles style: data_cell.cell_style
                   end
                   data_cell

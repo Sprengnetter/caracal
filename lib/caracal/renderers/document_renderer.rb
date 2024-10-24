@@ -63,11 +63,11 @@ module Caracal
 
       #============= MODEL RENDERERS ===========================
 
-      def render_rawxml(xml, model)
+      def render_rawxml(xml, model, **options)
         xml << model.to_s
       end
 
-      def render_bookmark(xml, model)
+      def render_bookmark(xml, model, **options)
         if model.start?
           xml['w'].bookmarkStart 'w:id' => model.bookmark_id, 'w:name' => model.bookmark_name
         else
@@ -75,7 +75,7 @@ module Caracal
         end
       end
 
-      def render_iframe(xml, model)
+      def render_iframe(xml, model, **options)
         ::Zip::File.open(model.file) do |zip|
           entry    = zip.glob('word/document.xml').first
           content  = entry.get_input_stream.read
@@ -106,7 +106,7 @@ module Caracal
         end
       end
 
-      def render_image_proper(xml, model)
+      def render_image_proper(xml, model, **options)
         rel      = document.relationship type: :image, target: model.image_url, data: model.image_data
         rel_id   = rel.relationship_id
         rel_name = rel.formatted_target
@@ -149,7 +149,7 @@ module Caracal
         end
       end
 
-      def render_image(xml, model)
+      def render_image(xml, model, **options)
         unless ds = document.default_style
           raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
         end
@@ -195,14 +195,14 @@ module Caracal
         end
       end
 
-      def render_linebreak(xml, model)
+      def render_linebreak(xml, model, **options)
         w = xml['w']
         w.r do
           w.br
         end
       end
 
-      def render_tableofcontent(xml, model)
+      def render_tableofcontent(xml, model, **options)
         w = xml['w']
         w.p paragraph_options do
           w.r do
@@ -263,7 +263,7 @@ module Caracal
         end
       end
 
-      def render_link(xml, model)
+      def render_link(xml, model, **options)
         w = xml['w']
         if model.external?
           rel = document.relationship target: model.link_href, type: :link
@@ -280,7 +280,7 @@ module Caracal
         end
       end
 
-      def render_list(xml, model)
+      def render_list(xml, model, **options)
         if model.list_level == 0
           document.toplevel_lists << model
           list_num = document.toplevel_lists.length   # numbering uses 1-based index
@@ -291,7 +291,7 @@ module Caracal
         end
       end
 
-      def render_listitem(xml, model, list_num)
+      def render_listitem(xml, model, list_num, **options)
         ls      = document.find_list_style(model.list_item_type, model.list_item_level)
         hanging = ls.style_left.to_i - ls.style_indent.to_i - 1
         w = xml['w']
@@ -321,7 +321,7 @@ module Caracal
         end
       end
 
-      def render_pagebreak(xml, model)
+      def render_pagebreak(xml, model, **options)
         w = xml['w']
         if model.page_break_wrap
           w.p paragraph_options do
@@ -336,7 +336,7 @@ module Caracal
         end
       end
 
-      def render_paragraph(xml, model)
+      def render_paragraph(xml, model, **options)
         w = xml['w']
         w.p paragraph_options do
           w.pPr do
@@ -360,7 +360,7 @@ module Caracal
         end
       end
 
-      def render_rule(xml, model)
+      def render_rule(xml, model, **options)
         options = { 'w:color' => model.rule_color, 'w:sz' => model.rule_size, 'w:val' => model.rule_line, 'w:space' => model.rule_spacing }
         w = xml['w']
 
@@ -373,7 +373,7 @@ module Caracal
         end
       end
 
-      def render_text(xml, model)
+      def render_text(xml, model, **options)
         return if model.text_content == '' and not model.text_end_tab
         w = xml['w']
         w.r run_options do
@@ -385,7 +385,7 @@ module Caracal
         end
       end
 
-      def render_field(xml, model)
+      def render_field(xml, model, **options)
         w = xml['w']
         w.r run_options do
           render_run_attributes(xml, model, skip_empty: true)
@@ -397,7 +397,7 @@ module Caracal
         end
       end
 
-      def render_table(xml, model)
+      def render_table(xml, model, **options)
         w = xml['w']
         tbl_look = table_look_options(model)
 
@@ -492,7 +492,7 @@ module Caracal
 
                   tc.contents.each do |table_cell_content|
                     method = render_method_for_model table_cell_content
-                    send method, xml, table_cell_content
+                    send method, xml, table_cell_content, in_table: true
                   end
                 end
 

@@ -67,7 +67,7 @@ module Caracal
             # the final tag in a table cell *must* be a paragraph for OOXML to not throw an error.
             p_klass = Caracal::Core::Models::ParagraphModel
             unless contents.last.is_a? p_klass
-              self.contents << p_klass.new(self.paragraph_attributes.merge content: '')
+              self.contents << p_klass.new(self.paragraph_attributes.merge(self.run_attributes.to_h).merge content: '')
             end
           end
         end
@@ -93,8 +93,7 @@ module Caracal
         # In all cases, invalid options will simply be ignored.
         #
         def apply_styles(opts={}, reverse: false)
-          # make dup of options so we don't
-          # harm args sent to sibling cells
+          # make dup of options so we don't harm args sent to sibling cells
           options = opts.dup
 
           # first, try apply to self
@@ -110,7 +109,7 @@ module Caracal
           # then, try apply to contents
           contents.each do |model|
             if model.respond_to? :apply_styles
-              model.apply_styles options, reverse: reverse
+              model.apply_styles options , reverse: reverse
             else
               pa = model.respond_to?(:paragraph_attributes) ? model.paragraph_attributes : {}
               options.each do |k, v|

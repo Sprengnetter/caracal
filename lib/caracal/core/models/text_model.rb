@@ -57,7 +57,7 @@ module Caracal
           options = opts.dup
           ra = self.run_attributes
           options.each do |k, v|
-            if self.respond_to? k and not ra[k]
+            if self.respond_to? k and (reverse or not ra[k])
               self.send k, v
             end
           end

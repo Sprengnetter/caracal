@@ -197,7 +197,7 @@ module Caracal
           options = opts.dup
           pa = self.paragraph_attributes
           options.each do |k, v|
-            if self.respond_to? k and not pa[k]
+            if self.respond_to? k and (reverse or not pa[k])
               self.send k, v
               # options.delete k unless HasRunAttributes::ATTRS.include? k
             end
