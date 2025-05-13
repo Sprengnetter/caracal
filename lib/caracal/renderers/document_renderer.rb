@@ -552,8 +552,8 @@ module Caracal
           run.bookmark_name
         else
           name = "_Toc#{ model.object_id }"
-          model.runs.prepend(Caracal::Core::Models::BookmarkModel.new start: true, name: name)
-          model.runs.append(Caracal::Core::Models::BookmarkModel.new start: false)
+          model.runs.prepend(Caracal::Core::Models::BookmarkModel.new start: true, name: name, id: document.next_bookmark_id)
+          model.runs.append(Caracal::Core::Models::BookmarkModel.new start: false, id: document.current_bookmark_id)
           name
         end
       end

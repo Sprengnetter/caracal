@@ -11,7 +11,6 @@ module Caracal
     module Bookmarks
       def self.included(base)
         base.class_eval do
-
           #------------------------------------------------
           # Public Methods
           #------------------------------------------------
@@ -28,7 +27,7 @@ module Caracal
 
           def bookmark_start(*args, &block)
             options = Caracal::Utilities.extract_options!(args)
-            options.merge!({ start: true, id: next_bookmark_id })
+            options.merge!(start: true, id: next_bookmark_id)
 
             model = Caracal::Core::Models::BookmarkModel.new(options, &block)
             if model.valid?
@@ -42,7 +41,7 @@ module Caracal
           def bookmark_end
             contents << Caracal::Core::Models::BookmarkModel.new(start: false, id: current_bookmark_id)
           end
-          
+
         end
       end
     end

@@ -10,7 +10,7 @@ module Caracal
         use_prefix :bookmark
 
         has_boolean_attribute :start
-        has_string_attribute :id
+        has_integer_attribute :id
         has_string_attribute :name
 
         #========== GETTERS ===============================
@@ -27,7 +27,6 @@ module Caracal
         def start?
           !!bookmark_start
         end
-
 
         #========== VALIDATION ============================
 
