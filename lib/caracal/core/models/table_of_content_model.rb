@@ -11,12 +11,14 @@ module Caracal
       class TableOfContentModel < BaseModel
         use_prefix :toc
 
+        has_string_attribute :legend, default: nil
         has_integer_attribute :start_level, default: 1
         has_integer_attribute :end_level, default: 3
 
         def initialize(options={}, &block)
           @toc_start_level = DEFAULT_TOC_START_LEVEL
           @toc_end_level   = DEFAULT_TOC_END_LEVEL
+          @toc_legend      = DEFAULT_TOC_LEGEND
 
           super options, &block
         end
@@ -40,7 +42,7 @@ module Caracal
         private
 
         def option_keys
-          [:start_level, :end_level]
+          [:start_level, :end_level, :legend]
         end
 
       end

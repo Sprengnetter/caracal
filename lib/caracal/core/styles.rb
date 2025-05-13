@@ -18,25 +18,26 @@ module Caracal
 
           def self.default_styles
             [
-              { id: 'Normal',    name: 'normal',    font: 'Arial',    size: 20, line: 320, color: '333333', default: true, type: :paragraph },
-              { id: 'Header',    name: 'header',    font: 'Arial',    size: 20, bottom: 120, type: :paragraph },
-              { id: 'Footer',    name: 'footer',    font: 'Arial',    size: 20, bottom: 120, type: :paragraph },
-              { id: 'Heading1',  name: 'heading 1', font: 'Palatino', size: 36, bottom: 120, type: :paragraph },
-              { id: 'Heading2',  name: 'heading 2', font: 'Arial',    size: 26, bottom: 120, top: 120, bold: true, type: :paragraph },
-              { id: 'Heading3',  name: 'heading 3', font: 'Arial',    size: 24, bottom: 120, top: 120, bold: true, italic: true, color: '666666', type: :paragraph },
-              { id: 'Heading4',  name: 'heading 4', font: 'Palatino', size: 24, bottom: 120, top: 120, bold: true, type: :paragraph },
-              { id: 'Heading5',  name: 'heading 5', font: 'Arial',    size: 22, bottom: 120, top: 120, bold: true, type: :paragraph },
-              { id: 'Heading6',  name: 'heading 6', font: 'Arial',    size: 22, bottom: 120, top: 120, underline: true, italic: true, color: '666666', type: :paragraph },
-              { id: 'TOC1',      name: 'TOC 1',     font: 'Palatino', size: 22, bottom: 120, top: 120, indent_left:   0, bold: true, type: :paragraph },
-              { id: 'TOC2',      name: 'TOC 2',     font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left:  60, type: :paragraph },
-              { id: 'TOC3',      name: 'TOC 3',     font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 120, type: :paragraph },
-              { id: 'TOC4',      name: 'TOC 4',     font: 'Palatino', size: 22, bottom: 120, top: 120, indent_left: 180, italic: true, color: '666666', type: :paragraph },
-              { id: 'TOC5',      name: 'TOC 5',     font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 240, italic: true, color: '666666', type: :paragraph },
-              { id: 'TOC6',      name: 'TOC 6',     font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 320, italic: true, color: '666666', type: :paragraph },
-              { id: 'Title',     name: 'title',     font: 'Palatino', size: 60 },
-              { id: 'Subtitle',  name: 'subtitle',  font: 'Arial',    size: 28, top: 60 },
-              { id: 'Caption',   name: 'caption',   font: 'Arial',    size: 22, bottom: 120, top: 120, bold: true, type: :paragraph  },
-              { id: 'Hyperlink', name: 'hyperlink', type: 'character', underline: true, color: '0000ff' }
+              { id: 'Normal',     name: 'normal',      font: 'Arial',    size: 20, line: 320, color: '333333', default: true, type: :paragraph },
+              { id: 'Header',     name: 'header',      font: 'Arial',    size: 20, bottom: 120, type: :paragraph },
+              { id: 'Footer',     name: 'footer',      font: 'Arial',    size: 20, bottom: 120, type: :paragraph },
+              { id: 'Heading1',   name: 'heading 1',   font: 'Palatino', size: 36, bottom: 120, type: :paragraph },
+              { id: 'Heading2',   name: 'heading 2',   font: 'Arial',    size: 26, bottom: 120, top: 120, bold: true, type: :paragraph },
+              { id: 'Heading3',   name: 'heading 3',   font: 'Arial',    size: 24, bottom: 120, top: 120, bold: true, italic: true, color: '666666', type: :paragraph },
+              { id: 'Heading4',   name: 'heading 4',   font: 'Palatino', size: 24, bottom: 120, top: 120, bold: true, type: :paragraph },
+              { id: 'Heading5',   name: 'heading 5',   font: 'Arial',    size: 22, bottom: 120, top: 120, bold: true, type: :paragraph },
+              { id: 'Heading6',   name: 'heading 6',   font: 'Arial',    size: 22, bottom: 120, top: 120, underline: true, italic: true, color: '666666', type: :paragraph },
+              { id: 'TOCHeading', name: 'toc heading', font: 'Palatino', size: 36, bottom: 120, type: :paragraph },
+              { id: 'TOC1',       name: 'TOC 1',       font: 'Palatino', size: 22, bottom: 120, top: 120, indent_left:   0, bold: true, type: :paragraph },
+              { id: 'TOC2',       name: 'TOC 2',       font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left:  60, type: :paragraph },
+              { id: 'TOC3',       name: 'TOC 3',       font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 120, type: :paragraph },
+              { id: 'TOC4',       name: 'TOC 4',       font: 'Palatino', size: 22, bottom: 120, top: 120, indent_left: 180, italic: true, color: '666666', type: :paragraph },
+              { id: 'TOC5',       name: 'TOC 5',       font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 240, italic: true, color: '666666', type: :paragraph },
+              { id: 'TOC6',       name: 'TOC 6',       font: 'Arial',    size: 22, bottom: 120, top: 120, indent_left: 320, italic: true, color: '666666', type: :paragraph },
+              { id: 'Title',      name: 'title',       font: 'Palatino', size: 60 },
+              { id: 'Subtitle',   name: 'subtitle',    font: 'Arial',    size: 28, top: 60 },
+              { id: 'Caption',    name: 'caption',     font: 'Arial',    size: 22, bottom: 120, top: 120, bold: true, type: :paragraph  },
+              { id: 'Hyperlink',  name: 'hyperlink',   type: 'character', underline: true, color: '0000ff' }
             ]
           end
 

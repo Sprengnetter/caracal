@@ -204,6 +204,22 @@ module Caracal
 
       def render_tableofcontent(xml, model, **options)
         w = xml['w']
+        if model.toc_legend.present?
+          w.p do
+            w.pPr do
+              w.pStyle 'w:val' => 'TOCHeading'
+              w.rPr
+            end
+            w.r do
+              w.br 'w:type' => 'page'
+            end
+            w.r do
+              w.rPr
+              w.t model.toc_legend
+            end
+          end
+        end
+
         w.p paragraph_options do
           w.r do
             w.fldChar 'w:fldCharType' => 'begin'
