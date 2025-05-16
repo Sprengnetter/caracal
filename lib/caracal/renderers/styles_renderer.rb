@@ -152,7 +152,7 @@ module Caracal
             w.ind indentation unless indentation.nil?
             # w.contextualSpacing # TODO: Ignore Spacing Above and Below When Using Identical Styles
             w.jc            'w:val' => model.style_align.to_s       unless model.style_align.nil?
-            w.outlineLvl    'w:val' => model.style_outline_lvl.to_s unless model.style_outline_lvl.nil?
+            w.outlineLvl    'w:val' => (model.style_outline_lvl - 1).to_s unless model.style_outline_lvl.nil?
           end
 
           # run properties

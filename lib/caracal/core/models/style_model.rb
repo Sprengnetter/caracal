@@ -75,7 +75,9 @@ module Caracal
         #========== GETTERS ===============================
 
         def style_outline_lvl
-          style_id.match(/Heading(\d)\Z/) {|match| match[1].to_i }
+          # outline levels in Word are zero-based, but we use 1-based levels within our models
+          # this will be taken into account in the renderer
+          style_id.match(/Heading(\d)\Z/) {|match| match[1].to_i}
         end
 
         def run_attributes

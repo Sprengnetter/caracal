@@ -4,18 +4,18 @@ require 'caracal/errors'
 
 module Caracal
   module Core
-    
-    # This module encapsulates all the functionality related to adding 
+
+    # This module encapsulates all the functionality related to adding
     # table of contents to the document.
     #
     module TableOfContents
       def self.included(base)
         base.class_eval do
-          
+
           #-------------------------------------------------------------
           # Public Methods
           #-------------------------------------------------------------
-          
+
           def table_of_contents(options={}, &block)
             model = Caracal::Core::Models::TableOfContentModel.new(options, &block)
             unless model.valid?
@@ -34,6 +34,6 @@ module Caracal
         end
       end
     end
-    
+
   end
 end

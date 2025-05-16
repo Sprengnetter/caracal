@@ -204,48 +204,51 @@ module Caracal
 
       def render_tableofcontent(xml, model, **options)
         w = xml['w']
-        if model.toc_legend.present?
-          w.p do
-            w.pPr do
-              w.pStyle 'w:val' => 'TOCHeading'
-              w.rPr
-            end
-            w.r do
-              w.br 'w:type' => 'page'
-            end
-            w.r do
-              w.rPr
-              w.t model.toc_legend
-            end
+        w.p paragraph_options do
+          w.pPr do
+            w.pStyle 'w:val' => 'TOCHeading'
+            w.rPr
+          end
+          w.r do
+            w.br 'w:type' => 'page'
+          end
+          w.r do
+            w.t model.toc_legend
           end
         end
 
-        w.p paragraph_options do
-          w.r do
-            w.fldChar 'w:fldCharType' => 'begin'
-          end
-          w.r do
-            w.instrText(
-              { 'xml:space' => 'preserve' },
-              " TOC \\o \"#{model.toc_start_level}-#{model.toc_end_level}\" \\h \\z \\u"
-            )
-          end
-          w.r do
-            w.fldChar 'w:fldCharType' => 'separate'
-          end
-        end
+        fieldstart_rendered = false
 
         bookmarks_for(headings).each do |bookmark|
           next unless model.includes? bookmark[:level] # Skip levels outside the accepted range
 
           w.p paragraph_options do
-            w.pStyle 'w:val' => "TOC#{ bookmark[:level] }"
-            w.tabs do
-              w.tab 'w:val' => 'right', 'w:leader' => 'dot'
+            w.pPr do
+              w.pStyle 'w:val' => "TOC#{bookmark[:level]}"
+              w.tabs do
+                w.tab 'w:val' => 'right', 'w:leader' => 'dot', 'w:pos' => '9486'
+              end
             end
+
+            unless fieldstart_rendered
+              w.r do
+                w.fldChar 'w:fldCharType' => 'begin'
+              end
+              w.r do
+                w.instrText(
+                  { 'xml:space' => 'preserve' },
+                  " TOC \\o \"#{model.toc_start_level}-#{model.toc_end_level}\" \\h \\z \\u "
+                )
+              end
+              w.r do
+                w.fldChar 'w:fldCharType' => 'separate'
+              end
+              fieldstart_rendered = true
+            end
+
             w.hyperlink 'w:anchor' => bookmark[:ref], 'w:history' => true do
               w.r do
-                w.pPr do
+                w.rPr do
                   w.rStyle 'w:val' => 'Hyperlink'
                 end
                 w.t bookmark[:text]
@@ -265,13 +268,16 @@ module Caracal
               w.r do
                 w.fldChar 'w:fldCharType' => 'separate'
               end
-              # Insert page reference here if it can be calculated
+              w.r do
+                w.t '{bitte aktualisieren}' # fake number
+              end
               w.r do
                 w.fldChar 'w:fldCharType' => 'end'
               end
             end
           end
         end
+
         w.p paragraph_options do
           w.r do
             w.fldChar 'w:fldCharType' => 'end'
@@ -539,7 +545,9 @@ module Caracal
           bookmarks << {
             ref:   bookmark_for(heading),
             text:  heading.plain_text,
-            level: heading.try(:paragraph_style).match(/Heading(\d)\Z/) { |m| m[1] || 1 }
+            # outline levels in Word are zero-based, but we use 1-based levels within our models
+            # this will be taken into account in the renderer
+            level: heading.try(:paragraph_style).match(/Heading(\d)\Z/) { |m| m[1].to_i || 1 }
           }
         end
         bookmarks

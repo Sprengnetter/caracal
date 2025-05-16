@@ -11,9 +11,9 @@ module Caracal
       class TableOfContentModel < BaseModel
         use_prefix :toc
 
-        has_string_attribute :legend, default: nil
+        has_string_attribute  :legend,      default: nil
         has_integer_attribute :start_level, default: 1
-        has_integer_attribute :end_level, default: 3
+        has_integer_attribute :end_level,   default: 3
 
         def initialize(options={}, &block)
           @toc_start_level = DEFAULT_TOC_START_LEVEL
@@ -33,7 +33,7 @@ module Caracal
 
         def valid?
           [:start_level, :end_level].each do |method|
-            value = send("toc_#{method}")
+            value = send "toc_#{method}"
             return false if value <= 0 || value > 6
           end
           toc_start_level <= toc_end_level
