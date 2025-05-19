@@ -156,7 +156,7 @@ module Caracal
           options.merge! content: args[0] if args[0]
           options.merge! href:    args[1] if args[1]
 
-          model = Caracal::Core::Models::LinkModel.new(options, &block)
+          model = Caracal::Core::Models::LinkModel.new(options.except(:hide_mark), &block)
           if model.valid?
             runs << model
           else

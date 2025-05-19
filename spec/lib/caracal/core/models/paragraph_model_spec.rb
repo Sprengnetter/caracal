@@ -53,7 +53,7 @@ describe Caracal::Core::Models::ParagraphModel do
 
     # .run_attributes
     describe '.run_attributes' do
-      let(:expected) { { color: '666666', size: 20, bold: false, italic: false, underline: true, bgcolor: 'cccccc' } }
+      let(:expected) { { color: '666666', hide_mark: nil, size: 20, bold: false, italic: false, underline: true, bgcolor: 'cccccc' } }
 
       it { expect(subject.run_attributes.to_h).to eq expected }
     end
@@ -121,7 +121,7 @@ describe Caracal::Core::Models::ParagraphModel do
     describe '.link' do
       let!(:length) { subject.runs.length }
 
-      before { subject.link 'Text', 'http://www.google.com' }
+      before { subject.link 'Text', 'https://www.duckduckgo.com' }
 
       it { expect(subject.runs.size).to eq length + 1 }
     end
@@ -193,7 +193,7 @@ describe Caracal::Core::Models::ParagraphModel do
     # .option_keys
     describe '.option_keys' do
       let(:actual)   { subject.send(:option_keys).sort }
-      let(:expected) { [:align, :bgcolor, :bgstyle, :bold, :border, :border_color, :border_line, :border_size, :border_spacing, :border_theme_color, :bottom, :bottom, :color, :content, :italic, :keep_lines, :keep_next, :left, :line, :right, :size, :style, :tabs, :theme_bgcolor, :theme_color, :top, :top, :underline, :widow_control, :border_bottom, :border_horizontal, :border_vertical, :border_top, :border_left, :border_right, :whitespace, :vertical_align, :strike, :small_caps, :caps, :rtl, :highlight_color, :font].sort }
+      let(:expected) { [:align, :bgcolor, :bgstyle, :bold, :border, :border_color, :border_line, :border_size, :border_spacing, :border_theme_color, :bottom, :bottom, :color, :content, :italic, :keep_lines, :keep_next, :left, :line, :right, :size, :style, :tabs, :theme_bgcolor, :theme_color, :top, :top, :underline, :widow_control, :border_bottom, :border_horizontal, :border_vertical, :border_top, :border_left, :border_right, :whitespace, :vertical_align, :strike, :small_caps, :caps, :rtl, :highlight_color, :font, :hide_mark].sort }
 
       it { expect(actual).to eq expected }
     end

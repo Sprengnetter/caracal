@@ -118,7 +118,7 @@ describe Caracal::Core::Models::TableOfContentModel do
     # .option_keys
     describe '.option_keys' do
       let(:actual)     { subject.send(:option_keys).sort }
-      let(:expected)  { [:start_level, :end_level].sort }
+      let(:expected)  { [:start_level, :end_level, :legend].sort }
 
       it { expect(actual).to eq expected }
     end
