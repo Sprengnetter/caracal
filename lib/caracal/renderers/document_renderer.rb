@@ -496,7 +496,7 @@ module Caracal
                     end
 
                     # applying rowspan
-                    if tc.cell_rowspan and tc.cell_rowspan > 0
+                    if tc.cell_rowspan and tc.cell_rowspan > 1
                       rowspan_hash[tc_index] = tc.cell_rowspan - 1
                       w.vMerge 'w:val' => 'restart'
                     elsif rowspan_hash[tc_index] and rowspan_hash[tc_index] > 0

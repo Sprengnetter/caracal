@@ -36,7 +36,10 @@ module Caracal
           @image_right  = DEFAULT_IMAGE_RIGHT
           @image_anchor = DEFAULT_IMAGE_ANCHOR
 
-          super options, &block
+          super(options, &block).tap do
+            formatted_width
+            formatted_height
+          end
         end
 
         #=============== GETTERS ==============================
@@ -44,7 +47,7 @@ module Caracal
         [:width, :height].each do |m|
           define_method "formatted_#{m}" do
             value = send("image_#{m}")
-            pixels_to_emus(value, image_ppi)
+            instance_variable_get "@cached_image_#{m}" or instance_variable_set "@cached_image_#{m}", pixels_to_emus(value, image_ppi)
           end
         end
 
