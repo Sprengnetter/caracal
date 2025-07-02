@@ -503,7 +503,7 @@ module Caracal
                       w.vMerge 'w:val' => 'continue'
                       rowspan_hash[tc_index] -= 1
                     elsif rowspan_hash[tc_index] == 0
-                      w.vMerge
+                      # Do not add vMerge element when rowspan ends - this was the bug
                       rowspan_hash[tc_index] = nil
                     end
                     render_borders    w, tc, 'tcBorders', :cell

@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
-  s.authors = ["Trade Infomatics".freeze, "John Dugan".freeze, "Sprengnetter Real Estate", "Willem van Kerkhof"]
+  s.authors = ["Trade Infomatics".freeze, "John Dugan".freeze, "Sprengnetter Real Estate", "Willem van Kerkhof", "Kuba Kuzma"]
   s.date = "2022-01-26"
   s.description = " Caracal is a pure Ruby Microsoft Word generation library that produces professional quality MSWord documents (docx) using a simple, HTML-style DSL. ".freeze
   s.email = ["jpdugan@gmail.com".freeze, "willem.van-kerkhof@innoq.com".freeze]
