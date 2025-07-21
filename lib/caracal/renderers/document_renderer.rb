@@ -469,7 +469,7 @@ module Caracal
             end
           end
 
-          rowspan_hash = {}
+          rowspan_hash = {} # stores the remaining rowspans per table cell index
           model.rows.each_with_index do |row, index|
             w.tr do
               w.trPr do
@@ -496,16 +496,17 @@ module Caracal
                     end
 
                     # applying rowspan
-                    if tc.cell_rowspan and tc.cell_rowspan > 1
-                      rowspan_hash[tc_index] = tc.cell_rowspan - 1
-                      w.vMerge 'w:val' => 'restart'
-                    elsif rowspan_hash[tc_index] and rowspan_hash[tc_index] > 0
-                      w.vMerge 'w:val' => 'continue'
+                    if tc.cell_rowspan and tc.cell_rowspan > 1 # start new cell with rowspan
+                      rowspan_hash[tc_index] = tc.cell_rowspan - 1 # set rowspan info for next table rows
+                      w.vMerge 'w:val' => 'restart' # start new merged range
+                    elsif rowspan_hash[tc_index] and rowspan_hash[tc_index] > 0 # before end of merged range
+                      w.vMerge 'w:val' => 'continue' # continue merged range
                       rowspan_hash[tc_index] -= 1
-                    elsif rowspan_hash[tc_index] == 0
-                      # Do not add vMerge element when rowspan ends - this was the bug
-                      rowspan_hash[tc_index] = nil
+                    elsif rowspan_hash[tc_index] == 0 # last cell in merged range
+                      w.vMerge 'w:val' => 'continue'
+                      rowspan_hash[tc_index] = nil # remove rowspan info, next row will not get vMerge
                     end
+
                     render_borders    w, tc, 'tcBorders', :cell
                     render_background w, tc, :cell
                     render_margins    w, tc, 'tcMar', :cell
