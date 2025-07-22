@@ -452,8 +452,8 @@ module Caracal
             w.tblCaption          'w:val'  => model.table_caption unless model.table_caption.nil?
           end
 
+          column_widths = model.table_column_widths
           w.tblGrid do
-            column_widths = model.table_column_widths
             column_widths ||= model.rows.first.map do |tc|
               if tc.cell_width
                 [tc.cell_width] * (tc.cell_colspan || 1) # FIXME: this blatantly ignores defined column widths combined with merged cells!
@@ -485,13 +485,14 @@ module Caracal
                 w.tc do
                   w.tcPr do
                     cnf_style = tc.cnf_style(model, index, tc_index)
+                    # conditional styling rules
                     unless cnf_style.nil?
                       tc.apply_styles cnf_style.style_hash, reverse: true
                       w.cnfStyle 'w:val' => cnf_style.bitmask
                     end
 
                     # applying colspan
-                    if tc.cell_colspan
+                    if tc.cell_colspan and tc.cell_colspan > 1
                       w.gridSpan 'w:val' => tc.cell_colspan
                     end
 
@@ -510,12 +511,27 @@ module Caracal
                     render_borders    w, tc, 'tcBorders', :cell
                     render_background w, tc, :cell
                     render_margins    w, tc, 'tcMar', :cell
-                    w.vAlign 'w:val' => tc.cell_content_vertical_align unless tc.cell_content_vertical_align.nil?
+
+                    # if column_widths[tc_index] and column_widths[tc_index] > 0
+                    #   w.tcW 'w:w' => column_widths[tc_index], 'w:type' => 'auto'
+                    # end
+
+                    if tc.cell_content_vertical_align
+                      w.vAlign 'w:val' => tc.cell_content_vertical_align
+                    end
                   end
 
-                  tc.contents.each do |table_cell_content|
-                    method = render_method_for_model table_cell_content
-                    send method, xml, table_cell_content, in_table: true
+                  if tc.contents.any?
+                    tc.contents.each do |table_cell_content|
+                      method = render_method_for_model table_cell_content
+                      send method, xml, table_cell_content, in_table: true
+                    end
+                  else # table cells ALWAYS need at least an empty paragraph
+                    w.p do
+                      w.r do
+                        w.t ''
+                      end
+                    end
                   end
                 end
 
