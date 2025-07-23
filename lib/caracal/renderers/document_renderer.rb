@@ -498,14 +498,14 @@ module Caracal
 
                     # applying rowspan
                     if tc.cell_rowspan and tc.cell_rowspan > 1 # start new cell with rowspan
-                      rowspan_hash[tc_index] = tc.cell_rowspan - 1 # set rowspan info for next table rows
+                      rowspan_hash[tc_index] = tc.cell_rowspan - 1 # set rowspan info for next table rows: n-1 rows left to merge
                       w.vMerge 'w:val' => 'restart' # start new merged range
-                    elsif rowspan_hash[tc_index] and rowspan_hash[tc_index] > 0 # before end of merged range
+                    elsif rowspan_hash[tc_index] and rowspan_hash[tc_index] > 1 # before end of merged range
                       w.vMerge 'w:val' => 'continue' # continue merged range
                       rowspan_hash[tc_index] -= 1
-                    elsif rowspan_hash[tc_index] == 0 # last cell in merged range
+                    elsif rowspan_hash[tc_index] == 1 # last cell in merged range
                       w.vMerge 'w:val' => 'continue'
-                      rowspan_hash[tc_index] = nil # remove rowspan info, next row will not get vMerge
+                      rowspan_hash.delete tc_index # remove rowspan info, next row will not get vMerge
                     end
 
                     render_borders    w, tc, 'tcBorders', :cell
