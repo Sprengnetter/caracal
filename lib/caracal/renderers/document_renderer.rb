@@ -305,11 +305,11 @@ module Caracal
       def render_list(xml, model, **options)
         if model.list_level == 0
           document.toplevel_lists << model
-          list_num = document.toplevel_lists.length   # numbering uses 1-based index
+          model.numbering_id = document.next_numbering_id
         end
 
         model.recursive_items.each do |item|
-          render_listitem(xml, item, list_num)
+          render_listitem(xml, item, model.numbering_id)
         end
       end
 

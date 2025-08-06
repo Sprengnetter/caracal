@@ -5,7 +5,7 @@ module Caracal
     module Models
 
       # This class encapsulates the logic needed to store and manipulate
-      # taple style data and conditional formating.
+      # table style data and conditional formating.
       class TableStyleModel < StyleModel
         CONDITIONAL_FORMAT_TYPES = %i(wholeTable band1Horz band1Vert band2Horz band2Vert firstCol firstRow lastCol lastRow neCell nwCell seCell swCell)
         CONTENT_VERTICAL_ALIGNS  = %i(top center bottom)

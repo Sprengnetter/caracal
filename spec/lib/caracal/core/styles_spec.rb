@@ -15,7 +15,7 @@ describe Caracal::Core::Styles do
 
     # .default_styles
     describe '.default_styles' do
-      let(:expected) { (['Caption', 'Header', 'Footer', 'Normal', 'Title', 'Subtitle', 'Hyperlink', 'TOCHeading'] + (1..6).map { |i| ["Heading#{i}", "TOC#{i}"] }).flatten.sort }
+      let(:expected) { (['Caption', 'Header', 'Footer', 'Normal', 'Title', 'Subtitle', 'Hyperlink', 'Heading', 'TOCHeading'] + (1..6).map { |i| ["Heading#{i}", "TOC#{i}"] }).flatten.sort }
       let(:actual)   { subject.class.default_styles.map { |s| s[:id] }.sort }
 
       it {expect(actual).to eq expected }

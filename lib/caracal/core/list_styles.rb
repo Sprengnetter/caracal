@@ -5,18 +5,18 @@ require 'caracal/errors'
 
 module Caracal
   module Core
-    
+
     # This module encapsulates all the functionality related to defining
     # list styles.
     #
     module ListStyles
       def self.included(base)
         base.class_eval do
-          
+
           #-------------------------------------------------------------
           # Class Methods
           #-------------------------------------------------------------
-          
+
           def self.default_list_styles
             [
               { type: :ordered,   level: 0, format: 'decimal',     value: '%1.', left: 720,  indent: 360  },
@@ -28,7 +28,7 @@ module Caracal
               { type: :ordered,   level: 6, format: 'decimal',     value: '%7.', left: 5040, indent: 4680 },
               { type: :ordered,   level: 7, format: 'lowerLetter', value: '%8.', left: 5760, indent: 5400 },
               { type: :ordered,   level: 8, format: 'lowerRoman',  value: '%9.', left: 6480, indent: 6120, align: :right },
-                                                                                             
+
               { type: :unordered, level: 0, format: 'bullet',      value: '●',   left: 720,  indent: 360  },
               { type: :unordered, level: 1, format: 'bullet',      value: '○',   left: 1440, indent: 1080 },
               { type: :unordered, level: 2, format: 'bullet',      value: '■',   left: 2160, indent: 1800 },
@@ -38,19 +38,19 @@ module Caracal
               { type: :unordered, level: 6, format: 'bullet',      value: '●',   left: 5040, indent: 4680 },
               { type: :unordered, level: 7, format: 'bullet',      value: '○',   left: 5760, indent: 5400 },
               { type: :unordered, level: 8, format: 'bullet',      value: '■',   left: 6480, indent: 6120 }
-            ]           
+            ]
           end
-          
-          
+
+
           #-------------------------------------------------------------
           # Public Methods
           #-------------------------------------------------------------
-          
+
           #============== ATTRIBUTES ==========================
-          
+
           def list_style(options={}, &block)
             model = Caracal::Core::Models::ListStyleModel.new(options, &block)
-            
+
             if model.valid?
               register_list_style(model)
             else
@@ -58,36 +58,36 @@ module Caracal
             end
             model
           end
-          
-          
+
+
           #============== GETTERS =============================
-          
+
           def list_styles
             @list_styles ||= []
           end
-          
+
           def find_list_style(type, level)
             list_styles.find { |s| s.matches?(type, level) }
           end
-          
-          
+
+
           #============== REGISTRATION ========================
-          
+
           def register_list_style(model)
             unregister_list_style(model.style_type, model.style_level)
             list_styles << model
             model
           end
-          
+
           def unregister_list_style(type, level)
             if s = find_list_style(type, level)
               list_styles.delete(s)
             end
           end
-          
+
         end
       end
     end
-    
+
   end
 end

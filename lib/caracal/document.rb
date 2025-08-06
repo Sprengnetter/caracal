@@ -25,6 +25,7 @@ require 'caracal/core/table_of_contents'
 require 'caracal/core/text'
 require 'caracal/core/raw_xml'
 require 'caracal/core/theme'
+require 'caracal/core/heading_numbering'
 
 require 'caracal/renderers/app_renderer'
 require 'caracal/renderers/content_types_renderer'
@@ -72,9 +73,12 @@ module Caracal
     include Caracal::Core::Tables
     include Caracal::Core::TableOfContents
     include Caracal::Core::Text
+    include Caracal::Core::HeadingNumbering
 
     include Caracal::Core::RawXml
 
+
+    attr_accessor :current_numbering_id
 
     #------------------------------------------------------
     # Public Class Methods
@@ -130,6 +134,8 @@ module Caracal
       page_margins top: 1440, bottom: 1440, left: 1440, right: 1440
       page_numbers
 
+      self.current_numbering_id = 0
+
       [:font, :list_style, :namespace, :relationship, :style].each do |method|
         collection = self.class.send("default_#{method}s")
         collection.each do |item|
@@ -152,6 +158,10 @@ module Caracal
     #
     def contents
       @contents ||= []
+    end
+
+    def next_numbering_id
+      self.current_numbering_id += 1
     end
 
     #============ RENDERING ===============================

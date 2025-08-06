@@ -11,6 +11,8 @@ module Caracal
       # list data.
       #
       class ListModel < BaseModel
+        attr_accessor :numbering_id # identifies the abstract numbering scheme. Set during document rendering.
+
         use_prefix :list
 
         has_symbol_attribute :type, default: :unordered
